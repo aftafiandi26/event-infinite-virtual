@@ -11,4 +11,22 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    build: {
+        // Optimize for production
+        minify: 'esbuild',
+        cssCodeSplit: true,
+        sourcemap: false,
+        rollupOptions: {
+            output: {
+                manualChunks: {
+                    vendor: ['alpinejs'],
+                },
+            },
+        },
+    },
+    server: {
+        hmr: {
+            host: 'localhost',
+        },
+    },
 });
