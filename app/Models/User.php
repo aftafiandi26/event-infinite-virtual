@@ -18,8 +18,20 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'first_name',
+        'last_name',
         'email',
+        'phone',
+        'address',
         'password',
+        'verification_token',
+        'is_verified',
+        'active',
+        'level_account',
+        'participant_stat',
+        'identity_company',
+        'identity_company_address',
+        'profile_photo',
     ];
 
     /**
@@ -30,6 +42,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'verification_token',
     ];
 
     /**
@@ -42,6 +55,10 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_verified' => 'boolean',
+            'active' => 'boolean',
+            'level_account' => 'integer',
+            'participant_stat' => 'integer',
         ];
     }
 }

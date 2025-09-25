@@ -24,6 +24,9 @@ export default {
                     800: '#075985',
                     900: '#0c4a6e',
                 },
+                secondary: '#1e40af',
+                accent: '#f59e0b',
+                dark: '#1f2937',
                 brand: {
                     primary: '#182945',
                     secondary: '#f59e0b',
