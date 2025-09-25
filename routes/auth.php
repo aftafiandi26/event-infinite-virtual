@@ -15,12 +15,14 @@ Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
                 ->name('register');
 
-    Route::post('register', [RegisteredUserController::class, 'store']);
+    Route::post('register', [RegisteredUserController::class, 'store'])
+                ->middleware('throttle:10,1'); // 5 attempts per minute
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
                 ->name('login');
 
-    Route::post('login', [AuthenticatedSessionController::class, 'store']);
+    Route::post('login', [AuthenticatedSessionController::class, 'store'])
+                ->middleware('throttle:5,1'); // 5 attempts per minute
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
                 ->name('password.request');
@@ -34,9 +36,6 @@ Route::middleware('guest')->group(function () {
     Route::post('reset-password', [NewPasswordController::class, 'store'])
                 ->name('password.store');
 
-    // Custom email verification route
-    Route::get('verification/verify/{token}', [RegisteredUserController::class, 'verifyEmail'])
-                ->name('verification.verify');
 });
 
 Route::middleware('auth')->group(function () {
@@ -44,7 +43,7 @@ Route::middleware('auth')->group(function () {
                 ->name('verification.notice');
 
     Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
-                ->middleware(['signed', 'throttle:6,1'])
+                ->middleware(['signed', 'throttle:20,1'])
                 ->name('verification.verify');
 
     Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
